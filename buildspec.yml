@@ -2,7 +2,6 @@ version: 0.2
 
 phases:
   build:
-      :
       - echo "Starting staging build..."
       
       - echo "Getting staging parameters from Parameter Store..."

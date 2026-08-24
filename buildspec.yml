@@ -2,9 +2,10 @@ version: 0.2
 
 phases:
   build:
+    commands:
       - echo "Starting staging build..."
-      
       - echo "Getting staging parameters from Parameter Store..."
+
       - export ENVIRONMENT=$(aws ssm get-parameter --name "/my-website/staging/environment" --query "Parameter.Value" --output text)
       - export MESSAGE=$(aws ssm get-parameter --name "/my-website/staging/message" --query "Parameter.Value" --output text)
 

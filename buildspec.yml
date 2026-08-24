@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  build:
+      :
+      - echo "Starting staging build..."
+      
+      - echo "Getting staging parameters from Parameter Store..."
+      - export ENVIRONMENT=$(aws ssm get-parameter --name "/my-website/staging/environment" --query "Parameter.Value" --output text)
+      - export MESSAGE=$(aws ssm get-parameter --name "/my-website/staging/message" --query "Parameter.Value" --output text)
+
+      - echo "Environment: $ENVIRONMENT"
+      - echo "Message: $MESSAGE"
+
+      - echo "Replacing placeholders in app.js..."
+      - sed -i "s|{{ENVIRONMENT}}|$ENVIRONMENT|g" app.js
+      - sed -i "s|{{MESSAGE}}|$MESSAGE|g" app.js
+
+      - echo "Staging build completed."
+
+artifacts:
+  files:
+    - index.html
+    - app.js
+    - styles.css
